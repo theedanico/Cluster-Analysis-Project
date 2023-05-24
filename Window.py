@@ -108,7 +108,7 @@ class Window(QMainWindow):
         # labels
         dataLbl = QLabel('Load data', self)
         methodLbl = QLabel('Choose a method of analysis', self)
-        metricLbl = QLabel('Choose a measure of respite', self)
+        metricLbl = QLabel('Choose a measure of distance', self)
         clustersLbl = QLabel('Specify the number of clusters to create', self)
         # plotLbl = QLabel('Select chart type', self)
 
@@ -139,8 +139,8 @@ class Window(QMainWindow):
         self.comboBox2 = QComboBox()
         self.comboBox2.setObjectName('Measure')
         self.comboBox2.addItem('Euclidean distance')
-        self.comboBox2.addItem('Distance Chebyshev')
-        self.comboBox2.addItem('Taxonomic distance')
+        self.comboBox2.addItem('Cosine similarity')
+        self.comboBox2.addItem('Manhattan distance')
 
         self.comboBox1.activated.connect(self.method_input)
         self.comboBox2.activated.connect(self.metric_input)
@@ -353,10 +353,10 @@ class Window(QMainWindow):
 
         if self.metric_input == 'Euclidean distance':
             self.agnes = AggCluster(n_clusters=cluster_num, affinity='euclidean', compute_full_tree='auto', linkage='average')
-        elif self.metric_input == 'Distance Chebyshev':
-            self.agnes = AggCluster(n_clusters=cluster_num, affinity='complete', compute_full_tree='auto',
+        elif self.metric_input == 'Cosine similarity':
+            self.agnes = AggCluster(n_clusters=cluster_num, affinity='cosine', compute_full_tree='auto',
                                     linkage='average')
-        elif self.metric_input == 'Taxonomic distance':
+        elif self.metric_input == 'Manhattan distance':
             self.agnes = AggCluster(n_clusters=cluster_num, affinity='manhattan', compute_full_tree='auto',
                                     linkage='average')
 
@@ -374,7 +374,11 @@ class Window(QMainWindow):
 
         if self.metric_input == 'Euclidean distance':
             self.slink = AggCluster(n_clusters=cluster_num, affinity='euclidean', compute_full_tree='auto', linkage='single')
-        elif self.metric_input == 'Taxonomic distance':
+
+        elif self.metric_input == 'Cosine similarity':
+            self.slink = AggCluster(n_clusters=cluster_num, affinity='cosine', compute_full_tree='auto',
+                                    linkage='single')
+        elif self.metric_input == 'Manhattan distance':
             self.slink = AggCluster(n_clusters=cluster_num, affinity='manhattan', compute_full_tree='auto',
                                 linkage='single')
 
